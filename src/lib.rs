@@ -224,7 +224,11 @@ pub use crate::rdev::{
 };
 
 mod keycodes;
-#[cfg(target_os = "linux")]
+#[cfg(all(target_os = "linux", feature = "x11"))]
+#[path = "linux/mod.rs"]
+mod linux;
+#[cfg(all(target_os = "linux", not(feature = "x11")))]
+#[path = "linux_stub.rs"]
 mod linux;
 #[cfg(target_os = "macos")]
 mod macos;
